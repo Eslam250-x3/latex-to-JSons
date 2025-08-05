@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل التفاعلي لكتابة الأسئلة الرياضية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            border-color: #3b82f6;
+            background-color: #3b82f6;
+            color: white;
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            position: relative;
+            direction: ltr;
+            text-align: left;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #334155;
+            color: #94a3b8;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .copy-btn:hover {
+            background-color: #475569;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            border-right: 4px solid #3b82f6;
+            padding-right: 1rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e40af;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .rtl-code {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">الدليل التفاعلي لكتابة الأسئلة الرياضية</h1>
+            <p class="text-lg text-gray-600 mt-2">دليلك الشامل لإنشاء أسئلة رياضية فعالة ومتوافقة مع النظام</p>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="mb-8">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-4 space-x-reverse" aria-label="Tabs">
+                    <button onclick="changeTab(event, 'guide-tab')" class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+                        دليل كتابة الأسئلة
+                    </button>
+                    <button onclick="changeTab(event, 'symbols-tab')" class="tab-btn text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+                        دليل العلامات الرياضية
+                    </button>
+                    <button onclick="changeTab(event, 'converter-tab')" class="tab-btn text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+                        محول LaTeX
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-content">
+            <!-- Guide Tab -->
+            <div id="guide-tab" class="tab-content-item">
+                <div class="card">
+                    <h2>1. أنواع الأسئلة المدعومة</h2>
+                    
+                    <h3>MCQ (اختيار من متعدد)</h3>
+                    <p class="mb-2 text-gray-700">استخدم `*` لتحديد الإجابة الصحيحة و `-` للإجابات الخاطئة.</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+ما هو ناتج `2x + 3 = 7`؟
+[CHOICES]
+- x = 1
+* x = 2
+- x = 3
+- x = 4</code></pre>
+                    </div>
+
+                    <h3 class="mt-6">String (إجابة نصية)</h3>
+                     <p class="mb-2 text-gray-700">تُستخدم للأسئلة التي تتطلب إجابة مباشرة.</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+احسب قيمة `x` في المعادلة `3x - 5 = 10`
+[ANSWER]
+x = 5</code></pre>
+                    </div>
+
+                    <h3 class="mt-6">Gap Text (ملء الفراغات)</h3>
+                     <p class="mb-2 text-gray-700">ضع الإجابات بالترتيب الصحيح في قسم `[GAPS]`.</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+في المعادلة `ax + b = c`، إذا كان `a = 2` و `c = 10`، فإن `x = [BLANK]` عندما `b = [BLANK]`
+[GAPS]
+3
+4</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>2. كتابة المعادلات الرياضية</h2>
+                    <p class="mb-4 text-gray-700">استخدم العلامات المائلة (backticks) لكتابة الصيغ الرياضية.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-800">
+                        <li>للمعادلات البسيطة: <code class="bg-gray-200 p-1 rounded">`2x + 3 = 7`</code></li>
+                        <li>للكسور: <code class="bg-gray-200 p-1 rounded">`x/2 + 3/4 = 5/8`</code></li>
+                        <li>للأسس: <code class="bg-gray-200 p-1 rounded">`x^2 + 2x + 1 = 0`</code></li>
+                        <li>للجذور: <code class="bg-gray-200 p-1 rounded">`sqrt(x) = 4`</code></li>
+                        <li>للدوال المثلثية: <code class="bg-gray-200 p-1 rounded">`sin(x) = 1/2`</code></li>
+                    </ul>
+                     <p class="mt-4 mb-2 text-gray-700 font-semibold">للمعادلات المعقدة استخدم علامتين مائلتين `` ``:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+حل المعادلة التربيعية ``x^2 + 5x + 6 = 0``
+[CHOICES]
+* x = -2, x = -3
+- x = 2, x = 3
+- x = -1, x = -6
+- x = 1, x = 6</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>3. أمثلة عملية للرياضيات</h2>
+                    <h3>مثال 1: الجبر</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+إذا كان `f(x) = 2x + 3`، فما قيمة `f(5)`؟
+[CHOICES]
+- 8
+- 10
+* 13
+- 15</code></pre>
+                    </div>
+                    <h3 class="mt-6">مثال 2: الهندسة</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+مساحة المثلث الذي أطوال أضلاعه `3` و `4` و `5` سم هي:
+[CHOICES]
+- 12 سم²
+* 6 سم²
+- 10 سم²
+- 7.5 سم²</code></pre>
+                    </div>
+                    <h3 class="mt-6">مثال 3: التفاضل</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+مشتقة الدالة ``f(x) = x^3 + 2x^2 - 5x + 1`` هي:
+[ANSWER]
+``3x^2 + 4x - 5``</code></pre>
+                    </div>
+                    <h3 class="mt-6">مثال 4: الإحصاء</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STEM]
+المتوسط الحسابي للأرقام `2, 4, 6, 8, 10` هو [BLANK]
+[GAPS]
+6</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>4. نصائح مهمة</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="mt-0">للمعادلات المعقدة:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>استخدم `` `` للمعادلات الطويلة.</li>
+                                <li>استخدم ` ` للرموز البسيطة.</li>
+                                <li>تأكد من صحة الصيغة الرياضية.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>للخيارات:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>ضع <code class="bg-green-200 text-green-800 p-1 rounded">*</code> قبل الإجابة الصحيحة.</li>
+                                <li>ضع <code class="bg-red-200 text-red-800 p-1 rounded">-</code> قبل الإجابات الخاطئة.</li>
+                                <li>تأكد من منطقية الخيارات.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="mt-6">للأسئلة متعددة الأجزاء:</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>[STATEMENT]
+دراسة الدالة التربيعية ``f(x) = x^2 - 4x + 3``
+
+[PART]
+type: mcq
+[STEM]
+جذور الدالة هي:
+[CHOICES]
+* x = 1, x = 3
+- x = -1, x = -3
+- x = 2, x = 4
+- x = 0, x = 4
+
+[PART]
+type: string
+[STEM]
+قيمة الدالة عند `x = 2`
+[ANSWER]
+-1</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>5. أخطاء شائعة يجب تجنبها</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 bg-red-100 border-r-4 border-red-500 rounded">
+                            <span class="text-2xl mr-4 ml-2">❌</span>
+                            <div>
+                                <p class="font-semibold text-red-800">خطأ: <code class="text-red-900">x^2+3x+2=0</code> (بدون مسافات)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-green-100 border-r-4 border-green-500 rounded">
+                            <span class="text-2xl mr-4 ml-2">✅</span>
+                            <div>
+                                <p class="font-semibold text-green-800">صحيح: <code class="text-green-900">x^2 + 3x + 2 = 0</code></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-red-100 border-r-4 border-red-500 rounded">
+                             <span class="text-2xl mr-4 ml-2">❌</span>
+                            <div>
+                                <p class="font-semibold text-red-800">خطأ: استخدام رموز غير مدعومة</p>
+                            </div>
+                        </div>
+                         <div class="flex items-center p-4 bg-green-100 border-r-4 border-green-500 rounded">
+                            <span class="text-2xl mr-4 ml-2">✅</span>
+                            <div>
+                                <p class="font-semibold text-green-800">صحيح: استخدام الرموز المحددة في الدليل</p>
+                            </div>
+                        </div>
+                         <div class="flex items-center p-4 bg-red-100 border-r-4 border-red-500 rounded">
+                           <span class="text-2xl mr-4 ml-2">❌</span>
+                            <div>
+                                <p class="font-semibold text-red-800">خطأ: عدم وضع * قبل الإجابة الصحيحة</p>
+                            </div>
+                        </div>
+                         <div class="flex items-center p-4 bg-green-100 border-r-4 border-green-500 rounded">
+                           <span class="text-2xl mr-4 ml-2">✅</span>
+                            <div>
+                                <p class="font-semibold text-green-800">صحيح: وضع * قبل الإجابة الصحيحة دائماً</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card">
+                    <h2>6. مثال شامل</h2>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>type: mcq
+[STEM]
+حل نظام المعادلات:
+``\begin{cases} 2x + y = 5 \\ x - y = 1 \end{cases}``
+[CHOICES]
+- x = 1, y = 3
+* x = 2, y = 1
+- x = 3, y = -1
+- x = 0, y = 5
+
+---
+
+type: string
+[STEM]
+احسب مساحة الدائرة التي نصف قطرها `r = 3` سم (استخدم ``\pi = 3.14``)
+[ANSWER]
+28.26 سم²
+
+---
+
+type: gapText
+[STEM]
+في المثلث القائم، إذا كان الضلع المقابل = [BLANK] والوتر = 10، فإن ``\sin(\theta) = [BLANK]``
+[GAPS]
+6
+0.6</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Symbols Tab -->
+            <div id="symbols-tab" class="tab-content-item hidden">
+                <div class="card">
+                    <h2>🔢 دليل العلامات الرياضية</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Operations -->
+                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h3 class="mt-0 text-blue-800">1. العمليات الأساسية</h3>
+                            <pre class="text-gray-700"><code>+   الجمع: 2 + 3 = 5
+-   الطرح: 7 - 4 = 3
+* الضرب: 5 * 6 = 30
+/   القسمة: 12 / 3 = 4
+=   يساوي: x = 5
+≠   لا يساوي: x ≠ 0</code></pre>
+                        </div>
+                        <!-- Exponents & Roots -->
+                        <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                            <h3 class="mt-0 text-green-800">2. الأسس والجذور</h3>
+                            <pre class="text-gray-700"><code>^      الأس: x^2, 2^3 = 8
+sqrt() الجذر التربيعي: sqrt(16) = 4
+cbrt() الجذر التكعيبي: cbrt(8) = 2</code></pre>
+                        </div>
+                        <!-- Fractions -->
+                        <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <h3 class="mt-0 text-yellow-800">3. الكسور</h3>
+                            <pre class="text-gray-700"><code>/        للكسور البسيطة: 1/2
+frac{}{} للكسور المعقدة: frac{2x+1}{x-3}</code></pre>
+                        </div>
+                        <!-- Comparisons -->
+                        <div class="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                            <h3 class="mt-0 text-purple-800">4. المقارنات</h3>
+                            <pre class="text-gray-700"><code>>   أكبر من: x > 5
+<   أصغر من: x < 10
+>=  أكبر من أو يساوي: x >= 3
+<=  أصغر من أو يساوي: x <= 7</code></pre>
+                        </div>
+                        <!-- Trigonometry -->
+                        <div class="p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                            <h3 class="mt-0 text-indigo-800">5. الدوال المثلثية</h3>
+                            <pre class="text-gray-700"><code>sin() الجيب
+cos() جيب التمام
+tan() الظل
+cot() ظل التمام
+sec() القاطع
+csc() قاطع التمام</code></pre>
+                        </div>
+                        <!-- Logarithms -->
+                        <div class="p-4 bg-pink-50 rounded-lg border border-pink-200">
+                            <h3 class="mt-0 text-pink-800">6. اللوغاريتمات</h3>
+                            <pre class="text-gray-700"><code>log()   اللوغاريتم العشري
+ln()    اللوغاريتم الطبيعي
+log_a() لوغاريتم بأساس</code></pre>
+                        </div>
+                         <!-- Greek -->
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <h3 class="mt-0 text-gray-800">7. الرموز اليونانية</h3>
+                            <pre class="text-gray-700"><code>π  باي     θ  ثيتا    α  ألفا
+β  بيتا    γ  جاما    δ  دلتا
+λ  لامدا   μ  مو      σ  سيجما
+Ω  أوميجا</code></pre>
+                        </div>
+                         <!-- Sets -->
+                        <div class="p-4 bg-teal-50 rounded-lg border border-teal-200">
+                            <h3 class="mt-0 text-teal-800">8. المجموعات والمنطق</h3>
+                            <pre class="text-gray-700"><code>∈   ينتمي إلى
+∉   لا ينتمي إلى
+⊂   مجموعة جزئية
+∪   الاتحاد
+∩   التقاطع
+∅   المجموعة الخالية</code></pre>
+                        </div>
+                         <!-- Calculus -->
+                        <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                            <h3 class="mt-0 text-orange-800">9. التفاضل والتكامل</h3>
+                            <pre class="text-gray-700"><code>d/dx  المشتقة
+∫     التكامل
+∂     المشتقة الجزئية
+lim   النهاية</code></pre>
+                        </div>
+                         <!-- Matrices -->
+                        <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                            <h3 class="mt-0 text-red-800">10. المصفوفات والمتجهات</h3>
+                            <pre class="text-gray-700"><code>[]  للمصفوفات
+||  القيمة المطلقة
+→   المتجه</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📝 أمثلة عملية للاستخدام</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3>مثال 1: معادلة تربيعية</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                                <pre><code>[STEM]
+حل المعادلة `x^2 - 5x + 6 = 0`
+[CHOICES]
+* x = 2, x = 3
+...</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>مثال 2: دوال مثلثية</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                                <pre><code>[STEM]
+إذا كان `sin(θ) = 1/2`، فما قيمة `θ` بالدرجات؟
+[CHOICES]
+* 30°
+...</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>مثال 3: لوغاريتمات</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                                <pre><code>[STEM]
+احسب قيمة `log_2(16)`
+[ANSWER]
+4</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>مثال 4: تفاضل</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                                <pre><code>[STEM]
+مشتقة الدالة `f(x) = 3x^2 + 2x - 1` هي:
+[ANSWER]
+6x + 2</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <h2>🎯 برومبت محدث للرياضيات</h2>
+                    <p class="mb-4 text-gray-700">يمكنك استخدام هذا القالب لتوجيه النظام لتحويل النصوص إلى صيغ رياضية صحيحة.</p>
+                    <div class="code-block rtl-code">
+                        <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                        <pre><code>أنت محول أسئلة رياضية ذكي. حول هذا السؤال مع استخدام الرموز الرياضية الصحيحة:
+
+النص الأصلي:
+[النص هنا]
+
+استخدم هذه الرموز:
+- العمليات : +, -, *, /, =, ≠, >, <, >=, <=
+- الأسس: x^2, x^3
+- الجذور: sqrt(x), cbrt(x)
+- الكسور: 1/2 أو frac{a}{b}
+- المثلثية: sin(x), cos(x), tan(x)
+- اللوغاريتمات: log(x), ln(x), log_2(x)
+- اليونانية: π, θ, α, β, γ, δ, λ, μ, σ, Ω
+- التفاضل: d/dx , ∫, ∂,  lim
+- المجموعات : ∈, ∉, ⊂, ∪, ∩, ∅
+- أخرى: |x |, →, °
+
+التنسيق المطلوب:
+[STEM]
+السؤال مع الرموز الرياضية الصحيحة
+[CHOICES] أو [ANSWER]
+الخيارات أو الإجابة مع الرموز
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Converter Tab -->
+            <div id="converter-tab" class="tab-content-item hidden">
+                <div class="card">
+                    <h2>⚙️ محول LaTeX إلى كود</h2>
+                    <p class="text-gray-600 mb-6">أداة لمساعدتك على تحويل صيغ LaTeX إلى التنسيق المبسط المستخدم في النظام. الصق كود LaTeX الخاص بك في المربع الأول واضغط على "تحويل".</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="latex-input" class="block mb-2 font-semibold text-gray-700">أدخل كود LaTeX هنا:</label>
+                            <textarea id="latex-input" rows="8" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" placeholder="e.g., \frac{x^{2} + 1}{\sqrt{y}}"></textarea>
+                        </div>
+                        <div>
+                            <label for="converted-output" class="block mb-2 font-semibold text-gray-700">النتيجة المحولة:</label>
+                            <textarea id="converted-output" rows="8" class="w-full p-3 border border-gray-300 rounded-md bg-gray-100" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button onclick="convertLatex()" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
+                            تحويل
+                        </button>
+                    </div>
+                </div>
+                 <div class="card">
+                    <h2>📜 قواعد التحويل</h2>
+                    <p class="text-gray-600 mb-4">هذه هي القواعد المستخدمة في المحول للرجوع إليها.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div>
+                            <h3 class="mt-0">الكسور</h3>
+                            <p><code>\frac{a}{b}</code> → <code>frac{a}{b}</code></p>
+                            <p><code>\frac{1}{2}</code> → <code>1/2</code></p>
+                        </div>
+                        <div>
+                            <h3>الأسس والجذور</h3>
+                            <p><code>x^{2}</code> → <code>x^2</code></p>
+                            <p><code>\sqrt{x}</code> → <code>sqrt(x)</code></p>
+                            <p><code>\sqrt[3]{x}</code> → <code>cbrt(x)</code></p>
+                        </div>
+                        <div>
+                            <h3>الدوال</h3>
+                            <p><code>\sin(x)</code> → <code>sin(x)</code></p>
+                            <p><code>\log_{a}(x)</code> → <code>log_a(x)</code></p>
+                        </div>
+                        <div>
+                            <h3>الرموز اليونانية</h3>
+                            <p><code>\alpha</code> → <code>α</code></p>
+                            <p><code>\beta</code> → <code>β</code></p>
+                        </div>
+                        <div>
+                            <h3>المقارنات</h3>
+                            <p><code>\leq</code> → <code>≤</code></p>
+                            <p><code>\geq</code> → <code>≥</code></p>
+                            <p><code>\neq</code> → <code>≠</code></p>
+                        </div>
+                         <div>
+                            <h3>التفاضل والتكامل</h3>
+                            <p><code>\int</code> → <code>∫</code></p>
+                            <p><code>\lim_{x \to a}</code> → <code>lim(x→a)</code></p>
+                        </div>
+                        <div>
+                            <h3>المصفوفات</h3>
+                            <p><code>\begin{matrix} a & b \\ c & d \end{matrix}</code> → <code>[a b; c d]</code></p>
+                        </div>
+                        <div>
+                            <h3>حالات خاصة</h3>
+                            <p><code>\text{...}</code> → <code>...</code> (تتم إزالة الأمر)</p>
+                            <p><code>\left( ... \right)</code> → <code>( ... )</code> (تتم إزالة الأقواس)</p>
+                        </div>
+                         <div>
+                            <h3>المعادلات المعقدة</h3>
+                            <p>البيئات مثل <code>cases</code>, <code>align</code> توضع داخل <code>`` ``</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to change tabs
+        function changeTab(event, tabId) {
+            const tabContents = document.querySelectorAll('.tab-content-item');
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Function to copy code from code blocks
+        function copyCode(button) {
+            const pre = button.nextElementSibling;
+            const code = pre.innerText;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            button.innerText = 'تم النسخ!';
+            setTimeout(() => {
+                button.innerText = 'نسخ';
+            }, 2000);
+        }
+
+        // --- NEW CONVERSION LOGIC ---
+        function convertLatex() {
+            const input = document.getElementById('latex-input').value.trim();
+            
+            // Helper function to check for complex environments that should not be parsed
+            const isComplexEquation = (latex) => {
+                const complexPatterns = [
+                    /\\begin\{cases\}/, /\\begin\{align\}/, /\\begin\{equation\}/,
+                    /\\begin\{matrix\}/, /\\begin\{pmatrix\}/, /\\begin\{bmatrix\}/,
+                    /\\begin\{vmatrix\}/, /\\begin\{array\}/
+                ];
+                return complexPatterns.some(pattern => pattern.test(latex));
+            };
+
+            if (isComplexEquation(input)) {
+                document.getElementById('converted-output').value = `\`\`${input}\`\``;
+                return;
+            }
+
+            let result = input;
+
+            // Define all replacement rules
+            const rules = [
+                // Fractions
+                { from: /\\frac\{([^}]+)\}\{([^}]+)\}/g, to: 'frac{$1}{$2}' },
+                { from: /\\dfrac\{([^}]+)\}\{([^}]+)\}/g, to: 'frac{$1}{$2}' },
+                { from: /\\tfrac\{([^}]+)\}\{([^}]+)\}/g, to: 'frac{$1}{$2}' },
+
+                // Exponents and Roots
+                { from: /\\sqrt\[3\]\{([^}]+)\}/g, to: 'cbrt($1)' },
+                { from: /\\sqrt\[(\d+)\]\{([^}]+)\}/g, to: 'nthroot($1,$2)' },
+                { from: /\\sqrt\{([^}]+)\}/g, to: 'sqrt($1)' },
+                { from: /\^\{([^}]+)\}/g, to: '^$1' },
+                { from: /\^(\w)/g, to: '^$1' },
+                
+                // Functions
+                { from: /\\(sin|cos|tan|cot|sec|csc|arcsin|arccos|arctan|sinh|cosh|tanh|exp|max|min|sup|inf|gcd|lcm|det|dim|ker|rank)/g, to: '$1' },
+                { from: /\\log_\{([^}]+)\}/g, to: 'log_$1' },
+                { from: /\\log/g, to: 'log' },
+                { from: /\\ln/g, to: 'ln' },
+
+                // Greek letters
+                { from: /\\alpha/g, to: 'α' }, { from: /\\beta/g, to: 'β' }, { from: /\\gamma/g, to: 'γ' },
+                { from: /\\delta/g, to: 'δ' }, { from: /\\epsilon|\\varepsilon/g, to: 'ε' }, { from: /\\zeta/g, to: 'ζ' },
+                { from: /\\eta/g, to: 'η' }, { from: /\\theta|\\vartheta/g, to: 'θ' }, { from: /\\iota/g, to: 'ι' },
+                { from: /\\kappa/g, to: 'κ' }, { from: /\\lambda/g, to: 'λ' }, { from: /\\mu/g, to: 'μ' },
+                { from: /\\nu/g, to: 'ν' }, { from: /\\xi/g, to: 'ξ' }, { from: /\\pi|\\varpi/g, to: 'π' },
+                { from: /\\rho|\\varrho/g, to: 'ρ' }, { from: /\\sigma/g, to: 'σ' }, { from: /\\varsigma/g, to: 'ς' },
+                { from: /\\tau/g, to: 'τ' }, { from: /\\upsilon/g, to: 'υ' }, { from: /\\phi|\\varphi/g, to: 'φ' },
+                { from: /\\chi/g, to: 'χ' }, { from: /\\psi/g, to: 'ψ' }, { from: /\\omega/g, to: 'ω' },
+                { from: /\\Gamma/g, to: 'Γ' }, { from: /\\Delta/g, to: 'Δ' }, { from: /\\Theta/g, to: 'Θ' },
+                { from: /\\Lambda/g, to: 'Λ' }, { from: /\\Xi/g, to: 'Ξ' }, { from: /\\Pi/g, to: 'Π' },
+                { from: /\\Sigma/g, to: 'Σ' }, { from: /\\Upsilon/g, to: 'Υ' }, { from: /\\Phi/g, to: 'Φ' },
+                { from: /\\Psi/g, to: 'Ψ' }, { from: /\\Omega/g, to: 'Ω' },
+
+                // Operators and Relations
+                { from: /\\cdot/g, to: '·' }, { from: /\\times/g, to: '×' }, { from: /\\div/g, to: '÷' },
+                { from: /\\pm/g, to: '±' }, { from: /\\mp/g, to: '∓' }, { from: /\\neq|\\ne/g, to: '≠' },
+                { from: /\\leq|\\le/g, to: '≤' }, { from: /\\geq|\\ge/g, to: '≥' }, { from: /\\ll/g, to: '≪' },
+                { from: /\\gg/g, to: '≫' }, { from: /\\approx/g, to: '≈' }, { from: /\\equiv/g, to: '≡' },
+                { from: /\\propto/g, to: '∝' }, { from: /\\sim/g, to: '∼' }, { from: /\\cong/g, to: '≅' },
+
+                // Calculus
+                { from: /\\partial/g, to: '∂' }, { from: /\\nabla/g, to: '∇' }, { from: /\\int/g, to: '∫' },
+                { from: /\\oint/g, to: '∮' }, { from: /\\lim_\{([^}]+)\}/g, to: (m, p1) => `lim(${p1.replace(/\\to|\\rightarrow/g, '→')})` },
+                { from: /\\sum_\{([^}]+)\}\^\{([^}]+)\}/g, to: 'Σ($1 to $2)' },
+                { from: /\\prod_\{([^}]+)\}\^\{([^}]+)\}/g, to: 'Π($1 to $2)' },
+
+                // Sets and Logic
+                { from: /\\in/g, to: '∈' }, { from: /\\notin/g, to: '∉' }, { from: /\\subset/g, to: '⊂' },
+                { from: /\\supset/g, to: '⊃' }, { from: /\\subseteq/g, to: '⊆' }, { from: /\\supseteq/g, to: '⊇' },
+                { from: /\\cup/g, to: '∪' }, { from: /\\cap/g, to: '∩' }, { from: /\\emptyset|\\varnothing/g, to: '∅' },
+                { from: /\\forall/g, to: '∀' }, { from: /\\exists/g, to: '∃' }, { from: /\\nexists/g, to: '∄' },
+                { from: /\\land|\\wedge/g, to: '∧' }, { from: /\\lor|\\vee/g, to: '∨' }, { from: /\\neg|\\lnot/g, to: '¬' },
+
+                // Arrows
+                { from: /\\rightarrow|\\to/g, to: '→' }, { from: /\\leftarrow/g, to: '←' }, { from: /\\leftrightarrow/g, to: '↔' },
+                { from: /\\Rightarrow/g, to: '⇒' }, { from: /\\Leftarrow/g, to: '⇐' }, { from: /\\Leftrightarrow/g, to: '⇔' },
+                { from: /\\uparrow/g, to: '↑' }, { from: /\\downarrow/g, to: '↓' }, { from: /\\mapsto/g, to: '↦' },
+
+                // Brackets and Absolute Values
+                { from: /\\left\|([^|]+)\\right\|/g, to: '||$1||' }, { from: /\\lfloor([^}]+)\\rfloor/g, to: '⌊$1⌋' },
+                { from: /\\lceil([^}]+)\\rceil/g, to: '⌈$1⌉' }, { from: /\\langle([^}]+)\\rangle/g, to: '⟨$1⟩' },
+                { from: /\\left\(|\\right\)|\\left\[|\\right\]|\\left\{|\\right\}/g, to: '' },
+
+                // Constants and Symbols
+                { from: /\\infty/g, to: '∞' }, { from: /\\degree/g, to: '°' }, { from: /\\ohm/g, to: 'Ω' },
+                { from: /\\hbar/g, to: 'ℏ' }, { from: /\\ell/g, to: 'ℓ' }, { from: /\\therefore/g, to: '∴' },
+                { from: /\\because/g, to: '∵' }, { from: /\\angle/g, to: '∠' }, { from: /\\parallel/g, to: '∥' },
+                { from: /\\perp/g, to: '⊥' }, { from: /\\mid/g, to: '∣' }, { from: /\\nmid/g, to: '∤' },
+
+                // Number Sets
+                { from: /\\mathbb\{C\}/g, to: 'ℂ' }, { from: /\\mathbb\{R\}/g, to: 'ℝ' },
+                { from: /\\mathbb\{Q\}/g, to: 'ℚ' }, { from: /\\mathbb\{Z\}/g, to: 'ℤ' },
+                { from: /\\mathbb\{N\}/g, to: 'ℕ' },
+
+                // Text and formatting cleanup
+                { from: /\\(text|mathrm|mathbf|mathit|mathcal|mathfrak)\{([^}]+)\}/g, to: '$2' },
+                { from: /\\\\/g, to: '\n' },
+                { from: /\\,/g, to: ' ' },
+                { from: /\{\}/g, to: '' },
+            ];
+
+            rules.forEach(rule => {
+                result = result.replace(rule.from, rule.to);
+            });
+            
+            // Final cleanup for braces and spacing
+            result = result.replace(/\{([^{}]*)\}/g, '$1').replace(/\{([^{}]*)\}/g, '$1');
+            result = result.replace(/\s+/g, ' ').trim();
+
+            document.getElementById('converted-output').value = result;
+        }
+    </script>
+</body>
+</html>
